@@ -281,6 +281,6 @@ void loop() {
         digitalWrite(13, HIGH);
         delay(1000);
     }
-
+    results.value = 0x000000;
     irrecv.resume();
   } 
