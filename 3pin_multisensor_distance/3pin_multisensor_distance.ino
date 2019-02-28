@@ -1,13 +1,13 @@
 int distPin = 9;    // Trigger
-int distPin2 = 10;    // Trigger for Distance Sensor 2  
+int distPin2 = 10;    // Trigger for Distance Sensor 2
 int distPin3 = 11;
-int distPin4 = 12; 
+int distPin4 = 12;
 int distPin5 = 13;
 int score;
 long duration, inches, duration2, inches2, duration3, inches3, duration4, inches4, duration5, inches5;    //Creats Variables for output data
 
 void hole1(){
-  
+
   digitalWrite(distPin, LOW);
   delayMicroseconds(5);
   digitalWrite(distPin, HIGH);
@@ -21,7 +21,7 @@ void hole1(){
 }
 
 void hole2(){
-  
+
   digitalWrite(distPin2, LOW);
   delayMicroseconds(5);
   digitalWrite(distPin2, HIGH);
@@ -35,7 +35,7 @@ void hole2(){
 }
 
 void hole3(){
-  
+
   digitalWrite(distPin3, LOW);
   delayMicroseconds(5);
   digitalWrite(distPin3, HIGH);
@@ -49,7 +49,7 @@ void hole3(){
 }
 
 void hole4(){
-  
+
   digitalWrite(distPin4, LOW);
   delayMicroseconds(5);
   digitalWrite(distPin4, HIGH);
@@ -63,7 +63,7 @@ void hole4(){
 }
 
 void hole5(){
-  
+
   digitalWrite(distPin5, LOW);
   delayMicroseconds(5);
   digitalWrite(distPin5, HIGH);
@@ -74,11 +74,11 @@ void hole5(){
   duration5 = pulseIn(distPin5, HIGH);
   inches5 = (duration5/2) / 74;
 }
- 
+
 void setup() {
   Serial.begin (9600);
 }
- 
+
 void loop() {
   hole1();
   hole2();
@@ -96,5 +96,5 @@ void loop() {
   Serial.print(inches5);
   Serial.print("in, ");
   Serial.println();
-  
+
 }
