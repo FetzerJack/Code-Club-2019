@@ -135,7 +135,7 @@ void loop() {
 
   }
   if (irrecv.decode(&results)){
-    if (results.value == 0xFF30CF && digitalRead(8) == LOW && digitalRead(9) == LOW)
+    if (results.value == 0xFF30CF && digitalRead(8) == LOW)
     {
         digitalWrite(8, HIGH);
         digitalWrite(9, HIGH);
@@ -146,7 +146,7 @@ void loop() {
         results.value = 0x000000;
         delay(250);
     }
-    if (results.value == 0xFF30CF && digitalRead(8) == HIGH && digitalRead(9) == HIGH)
+    if (results.value == 0xFF30CF && digitalRead(8) == HIGH)
     {
         digitalWrite(8, LOW);
         digitalWrite(9, LOW);
