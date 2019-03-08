@@ -30,8 +30,7 @@ void setup() {
   irrecv.enableIRIn();
 }
 
-void inouteffect()
-{
+void inouteffect() {
   digitalWrite(7, HIGH);
   digitalWrite(1, LOW);
   digitalWrite(2, LOW);
@@ -61,12 +60,9 @@ void inouteffect()
   digitalWrite(12, LOW);
   digitalWrite(0, LOW);
   delay(350);
-
-
-
 }
 
-void oeffect(){
+void oeffect() {
         digitalWrite(1, HIGH);
         delay(50);
         digitalWrite(6, LOW);
@@ -93,7 +89,7 @@ void oeffect(){
         delay(50);
 }
 
-void ieffect(){
+void ieffect() {
         digitalWrite(8, HIGH);
         delay(50);
         digitalWrite(0, LOW);
@@ -120,8 +116,7 @@ void ieffect(){
         delay(50);
 }
 
-void aeffect()
-{
+void aeffect() {
         digitalWrite(7, HIGH);
         digitalWrite(8, HIGH);
         digitalWrite(1, HIGH);
@@ -159,36 +154,31 @@ void aeffect()
         digitalWrite(12, LOW);
         digitalWrite(5, LOW);
         delay(50);
-
-  
 }
 
 void loop() {
-  if (iringeffect == 1 && oringeffect == 1)
-    {
-        iringeffect = 0;
-        oringeffect = 0;
-        aringeffect = 1;
-    }
-  if (iringeffect == 1){
-      ieffect();
+  if (iringeffect == 1 && oringeffect == 1) {
+     iringeffect = 0;
+     oringeffect = 0;
+     aringeffect = 1;
+  }
+  if (iringeffect == 1) {
+     ieffect();
   }
 
-  if (oringeffect == 1){
-      oeffect();
+  if (oringeffect == 1) {
+     oeffect();
   }
 
-    if (inout == 1){
-      inouteffect();
+  if (inout == 1) {
+     inouteffect();
   }
 
-    if (aringeffect == 1)
-    {
-      aeffect();
-    }
-  if (irrecv.decode(&results)){
-    if (results.value == 0xFF18E7 && digitalRead(8) == LOW) // #2 Inner Ring Static
-    {
+  if (aringeffect == 1) {
+     aeffect();
+  }
+  if (irrecv.decode(&results)) {
+    if (results.value == 0xFF18E7 && digitalRead(8) == LOW) { // #2 Inner Ring Static
         digitalWrite(8, HIGH);
         digitalWrite(9, HIGH);
         digitalWrite(10, HIGH);
@@ -198,8 +188,7 @@ void loop() {
         results.value = 0x000000;
         delay(500);
     }
-    else if (results.value == 0xFF18E7 && digitalRead(8) == HIGH)
-    {
+    else if (results.value == 0xFF18E7 && digitalRead(8) == HIGH) {
         digitalWrite(8, LOW);
         digitalWrite(9, LOW);
         digitalWrite(10, LOW);
@@ -210,8 +199,7 @@ void loop() {
         results.value = 0x000000;
         delay(500);
     }
-    else if (results.value == 0xFF7A85 && digitalRead(6) == LOW && digitalRead(2) == LOW) // #3 Outer Ring Static
-    {
+    else if (results.value == 0xFF7A85 && digitalRead(6) == LOW && digitalRead(2) == LOW) { // #3 Outer Ring Static
         digitalWrite(1, HIGH);
         digitalWrite(2, HIGH);
         digitalWrite(3, HIGH);
@@ -220,10 +208,8 @@ void loop() {
         digitalWrite(6, HIGH);
         results.value = 0x000000;
         delay(250);
-
     }
-    else if (results.value == 0xFF7A85 && digitalRead(6) == HIGH && digitalRead(2) == HIGH)
-    {
+    else if (results.value == 0xFF7A85 && digitalRead(6) == HIGH && digitalRead(2) == HIGH) {
         digitalWrite(1, LOW);
         digitalWrite(2, LOW);
         digitalWrite(3, LOW);
@@ -234,27 +220,22 @@ void loop() {
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFF30CF && digitalRead(7) == LOW) // #1 Center Static
-    {
-      digitalWrite(7, HIGH);
-      results.value = 0x000000;
-      delay(250);
+    else if (results.value == 0xFF30CF && digitalRead(7) == LOW) { // #1 Center Static
+        digitalWrite(7, HIGH);
+        results.value = 0x000000;
+        delay(250);
     }
-    else if (results.value == 0xFF30CF && digitalRead(7) == HIGH)
-    {
-      digitalWrite(7, LOW);
-      results.value = 0x000000;
-      delay(250);
-
+    else if (results.value == 0xFF30CF && digitalRead(7) == HIGH) {
+        digitalWrite(7, LOW);
+        results.value = 0x000000;
+        delay(250);
     }
-    else if (results.value == 0xFF10EF && iringeffect == 0) // #4 Inner Ring Dynamic
-    {
+    else if (results.value == 0xFF10EF && iringeffect == 0) { // #4 Inner Ring Dynamic
         iringeffect = 1;
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFF10EF && iringeffect == 1)
-    {
+    else if (results.value == 0xFF10EF && iringeffect == 1) {
         iringeffect = 0;
         digitalWrite(8, LOW);
         digitalWrite(9, LOW);
@@ -265,14 +246,12 @@ void loop() {
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFF38C7 && oringeffect == 0) // #5 Outer Ring Dynamic
-    {
+    else if (results.value == 0xFF38C7 && oringeffect == 0) { // #5 Outer Ring Dynamic
         oringeffect = 1;
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFF38C7 && oringeffect == 1)
-    {
+    else if (results.value == 0xFF38C7 && oringeffect == 1) {
         oringeffect = 0;
         digitalWrite(1, LOW);
         digitalWrite(2, LOW);
@@ -289,13 +268,11 @@ void loop() {
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFF5AA5 && aringeffect == 0) // #6 All Ring Effect
-    {
+    else if (results.value == 0xFF5AA5 && aringeffect == 0) { // #6 All Ring Effect
         aringeffect = 1;
         delay(250);
     }
-    else if (results.value == 0xFF5AA5 && aringeffect == 1)
-    {
+    else if (results.value == 0xFF5AA5 && aringeffect == 1) {
         aringeffect = 0;
         digitalWrite(1, LOW);
         digitalWrite(2, LOW);
@@ -312,14 +289,12 @@ void loop() {
         digitalWrite(0, LOW);
         delay(250);
     }
-    else if (results.value == 0xFF6897 && inout == 0) // #0 InOut Effect
-    {
+    else if (results.value == 0xFF6897 && inout == 0) { // #0 InOut Effect
         inout = 1;
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFF6897 && inout == 1)
-    {
+    else if (results.value == 0xFF6897 && inout == 1) {
         inout = 0;
         digitalWrite(1, LOW);
         digitalWrite(2, LOW);
@@ -337,8 +312,7 @@ void loop() {
         results.value = 0x000000;
         delay(250);
     }
-    else if (results.value == 0xFFA25D && digitalRead(1) == HIGH  || digitalRead(2) == HIGH || digitalRead(3) == HIGH || digitalRead(4) == HIGH || digitalRead(5) == HIGH || digitalRead(6) == HIGH || digitalRead(0) == HIGH || digitalRead(8) == HIGH || digitalRead(7) == HIGH) // All Off
-    {
+    else if (results.value == 0xFFA25D && digitalRead(1) == HIGH  || digitalRead(2) == HIGH || digitalRead(3) == HIGH || digitalRead(4) == HIGH || digitalRead(5) == HIGH || digitalRead(6) == HIGH || digitalRead(0) == HIGH || digitalRead(8) == HIGH || digitalRead(7) == HIGH) { // All Off
         digitalWrite(1, LOW);
         digitalWrite(2, LOW);
         digitalWrite(3, LOW);
@@ -359,8 +333,7 @@ void loop() {
         results.value = 0x000000;
         delay(500);
     }
-    else if (results.value == 0xFFA25D) // All On
-    {
+    else if (results.value == 0xFFA25D) { // All On
         digitalWrite(1, HIGH);
         digitalWrite(2, HIGH);
         digitalWrite(3, HIGH);
@@ -376,8 +349,6 @@ void loop() {
         digitalWrite(0, HIGH);
         results.value = 0x000000;
     }
-
-    
     results.value = 0x000000;
     irrecv.resume();
   }
