@@ -1,5 +1,6 @@
 #include "IRremote.h"
-#define NUM(a) (sizeof(a) / sizeof(*a))
+//#define NUM(a) (sizeof(a) / sizeof(*a));
+int numLights = 6;
 int receiver = 13;
 int iRingEffect, oRingEffect, aRingEffect; // <=== Check out the Camel Case !!!!
 int inOut;
@@ -14,9 +15,9 @@ decode_results results;
 
 void setup() {
    pinMode(c, OUTPUT);
-   for (int i = 0; i < NUM(inner); i++)
+   for (int i = 0; i < numLights; i++)
       pinMode(inner[i], OUTPUT);
-   for (int i = 0; i < NUM(outer); i++) 
+   for (int i = 0; i < numLights; i++) 
       pinMode(outer[i], OUTPUT);
 
    pinMode(13, INPUT);
@@ -32,19 +33,19 @@ void setup() {
 void inOutEffect()  
 {
   digitalWrite(c, HIGH);
-  for (int i = 0; i < NUM(inner); i++)
+  for (int i = 0; i < numLights; i++)
     digitalWrite(inner[i], LOW);
   delay(350);
 
-  for (int i = 0; i < NUM(outer); i++)
+  for (int i = 0; i < numLights; i++)
      digitalWrite(outer[i], HIGH); 
   delay(350);
 
-  for (int i = 0; i < NUM(inner); i++)
+  for (int i = 0; i < numLights; i++)
      digitalWrite(inner[i], HIGH);
   delay(350);
 
-  for (int i = 0; i < NUM(inner); i++)
+  for (int i = 0; i < numLights; i++)
      digitalWrite(outer[i], LOW);
   delay(350);
 } //End inOutEffect
@@ -54,9 +55,9 @@ void inOutEffect()
 //oEffect will....
 void oEffect() 
 {
-   int len = NUM(inner);
+   int len = numLights;
 
-   for (int i = 0; i < NUM(inner); i++)
+   for (int i = 0; i < numLights; i++)
    {
       digitalWrite(inner[i], HIGH);
       delay(50);
@@ -70,9 +71,9 @@ void oEffect()
 //iEffect will...
 void iEffect() 
 {
-   int len = NUM(outer);
+   int len = numLights;
 
-   for (int i = 0; i < NUM(outer); i++)
+   for (int i = 0; i < numLights; i++)
    {
       digitalWrite(outer[i], HIGH);
       delay(50);
@@ -86,10 +87,10 @@ void iEffect()
 //aEffect will...
 void aEffect() 
 {
-   int len = NUM(inner);
+   int len = numLights;
 
    digitalWrite(c, HIGH);
-   for (int i = 0; i < NUM(inner); i++)
+   for (int i = 0; i < numLights; i++)
    {
       digitalWrite(outer[i], HIGH);
       digitalWrite(inner[i], HIGH);
@@ -102,13 +103,12 @@ void aEffect()
 
 
 //allOff will check each of the pins in the array that it is sent and return true if all are off, false otherwise
-boolean allOff(int[], a)
+boolean allOff(int a[])
 {
   boolean off = true;
   int i = 0;
-  int max = NUM(a);
 
-  while (i < max && off)
+  while (i < numLights && off)
       if (digitalRead(a[i])==HIGH)
           off = false;
   
@@ -136,7 +136,7 @@ void loop()
   if (inOut == 1)
     inOutEffect();
 
-  if (aringeffect == 1) 
+  if (aRingEffect == 1) 
     aEffect();
 
 
@@ -146,12 +146,12 @@ void loop()
       {
          if (digitalRead(outer[0])==LOW)
          {
-            for (int i = 0; i < NUM(outer); i++)
+            for (int i = 0; i < numLights; i++)
                digitalWrite(outer[i], HIGH);
          }
          else //digitalRead(outer[0])==HIGH
          {
-            for (int i = 0; i < NUM(outer); i++)
+            for (int i = 0; i < numLights; i++)
                digitalWrite(outer[i], LOW);
             iRingEffect = 0;
          }
@@ -161,12 +161,12 @@ void loop()
       {
          if (digitalRead(inner[5])==LOW && digitalRead(inner[1])==LOW)
          {
-            for (int i = 0; i < NUM(inner); i++)
+            for (int i = 0; i < numLights; i++)
                digitalWrite(inner[i], HIGH);
          }
          else if (digitalRead(inner[5])==HIGH && digitalRead(inner[1])==HIGH)
          {
-            for (int i = 0; i < NUM(inner); i++)
+            for (int i = 0; i < numLights; i++)
               digitalWrite(inner[i], LOW);
 
             oRingEffect = 0;
@@ -189,7 +189,7 @@ void loop()
            else
            {
               iRingEffect = 0;
-              for (int i = 0; i < NUM(outer); i++) 
+              for (int i = 0; i < numLights; i++) 
                 digitalWrite(outer[i], LOW);
            }
            delay(250);
@@ -200,7 +200,7 @@ void loop()
             oRingEffect = 1;
           else
           {
-             for (int i = 0; i < NUM(inner); i++) 
+             for (int i = 0; i < numLights; i++) 
              {
              digitalWrite(inner[i], LOW);
              digitalWrite(outer[i], LOW);
@@ -217,7 +217,7 @@ void loop()
               aRingEffect = 0;
 
               digitalWrite(c, LOW);
-              for (int i = 0; i < NUM(inner); i++) 
+              for (int i = 0; i < numLights; i++) 
               {
                 digitalWrite(inner[i], LOW);
                 digitalWrite(outer[i], LOW);
@@ -231,9 +231,9 @@ void loop()
                inOut = 1;
            else
            {
-              inout = 0;
+              inOut = 0;
               digitalWrite(c, LOW);
-              for (int i = 0; i < NUM(inner); i++) 
+              for (int i = 0; i < numLights; i++) 
               {
                 digitalWrite(inner[i], LOW);
                 digitalWrite(outer[i], LOW);
@@ -246,7 +246,7 @@ void loop()
            if (allOff(inner) && allOff(outer))
            {
               digitalWrite(c, LOW);
-              for (int i = 0; i < NUM(inner); i++) 
+              for (int i = 0; i < numLights; i++) 
               {
                 digitalWrite(inner[i], LOW);
                 digitalWrite(outer[i], LOW);
@@ -257,10 +257,10 @@ void loop()
               inOut = 0;
               delay(500);
           }
-          else //<=== Just because they aren't all off doesn't necessarily mean they are all on
+          else
           {
               digitalWrite(c, LOW);
-              for (int i = 0; i < NUM(inner); i++) 
+              for (int i = 0; i < numLights; i++) 
               {
                 digitalWrite(inner[i], HIGH);
                 digitalWrite(outer[i], HIGH);
@@ -271,12 +271,12 @@ void loop()
    results.value = 0x000000;
    irrecv.resume();
  }
-}
 
 
-void write(int[] a, int interDel, int afterDel, value)
-{
+
+//void write(int[] a, int interDel, int afterDel, value)
+//{
     
 
 
-}
+//}
