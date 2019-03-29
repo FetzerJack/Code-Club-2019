@@ -103,7 +103,11 @@ void aEffect()
 
 
 //allOff will check each of the pins in the array that it is sent and return true if all are off, false otherwise
+<<<<<<< HEAD
 boolean allOff(int a[])
+=======
+boolean allOff(int[] a)
+>>>>>>> 1da62afae0f38b1890966351d1e504c6fc30adba
 {
   boolean off = true;
   int i = 0;
