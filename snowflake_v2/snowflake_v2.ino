@@ -17,7 +17,7 @@ void setup() {
    pinMode(c, OUTPUT);
    for (int i = 0; i < numLights; i++)
       pinMode(inner[i], OUTPUT);
-   for (int i = 0; i < numLights; i++) 
+   for (int i = 0; i < numLights; i++)
       pinMode(outer[i], OUTPUT);
 
    pinMode(13, INPUT);
@@ -30,7 +30,7 @@ void setup() {
 
 
 //In out effect will...
-void inOutEffect()  
+void inOutEffect()
 {
   digitalWrite(c, HIGH);
   for (int i = 0; i < numLights; i++)
@@ -38,7 +38,7 @@ void inOutEffect()
   delay(350);
 
   for (int i = 0; i < numLights; i++)
-     digitalWrite(outer[i], HIGH); 
+     digitalWrite(outer[i], HIGH);
   delay(350);
 
   for (int i = 0; i < numLights; i++)
@@ -53,7 +53,7 @@ void inOutEffect()
 
 
 //oEffect will....
-void oEffect() 
+void oEffect()
 {
    int len = numLights;
 
@@ -69,7 +69,7 @@ void oEffect()
 
 
 //iEffect will...
-void iEffect() 
+void iEffect()
 {
    int len = numLights;
 
@@ -85,7 +85,7 @@ void iEffect()
 
 
 //aEffect will...
-void aEffect() 
+void aEffect()
 {
    int len = numLights;
 
@@ -103,11 +103,7 @@ void aEffect()
 
 
 //allOff will check each of the pins in the array that it is sent and return true if all are off, false otherwise
-<<<<<<< HEAD
 boolean allOff(int a[])
-=======
-boolean allOff(int[] a)
->>>>>>> 1da62afae0f38b1890966351d1e504c6fc30adba
 {
   boolean off = true;
   int i = 0;
@@ -115,36 +111,36 @@ boolean allOff(int[] a)
   while (i < numLights && off)
       if (digitalRead(a[i])==HIGH)
           off = false;
-  
+
   return off;
 } //End allOff
 
 
 
-//MAIN LOOP 
-void loop() 
+//MAIN LOOP
+void loop()
 {
-  if (iRingEffect == 1 && oRingEffect == 1) 
+  if (iRingEffect == 1 && oRingEffect == 1)
   {
     iRingEffect = 0;
     oRingEffect = 0;
     aRingEffect = 1;
   }
 
-  if (iRingEffect == 1) 
+  if (iRingEffect == 1)
     iEffect();
 
-  if (oRingEffect == 1) 
+  if (oRingEffect == 1)
     oEffect();
 
   if (inOut == 1)
     inOutEffect();
 
-  if (aRingEffect == 1) 
+  if (aRingEffect == 1)
     aEffect();
 
 
-  if (irrecv.decode(&results)) 
+  if (irrecv.decode(&results))
   {
       if (results.value == 0xFF18E7)  // #2 Inner Ring Static <== what does the user press for code 0xFF18E7????
       {
@@ -160,7 +156,7 @@ void loop()
             iRingEffect = 0;
          }
          delay(500);
-      } 
+      }
       else if (results.value == 0xFF7A85)  // #3 Outer Ring Static
       {
          if (digitalRead(inner[5])==LOW && digitalRead(inner[1])==LOW)
@@ -178,7 +174,7 @@ void loop()
          delay(250);
        }
       else if (results.value == 0xFF30CF)  // #1 Center Static
-      { 
+      {
          if (digitalRead(c) == LOW)
             digitalWrite(c, HIGH);
          else
@@ -193,7 +189,7 @@ void loop()
            else
            {
               iRingEffect = 0;
-              for (int i = 0; i < numLights; i++) 
+              for (int i = 0; i < numLights; i++)
                 digitalWrite(outer[i], LOW);
            }
            delay(250);
@@ -204,7 +200,7 @@ void loop()
             oRingEffect = 1;
           else
           {
-             for (int i = 0; i < numLights; i++) 
+             for (int i = 0; i < numLights; i++)
              {
              digitalWrite(inner[i], LOW);
              digitalWrite(outer[i], LOW);
@@ -221,7 +217,7 @@ void loop()
               aRingEffect = 0;
 
               digitalWrite(c, LOW);
-              for (int i = 0; i < numLights; i++) 
+              for (int i = 0; i < numLights; i++)
               {
                 digitalWrite(inner[i], LOW);
                 digitalWrite(outer[i], LOW);
@@ -237,7 +233,7 @@ void loop()
            {
               inOut = 0;
               digitalWrite(c, LOW);
-              for (int i = 0; i < numLights; i++) 
+              for (int i = 0; i < numLights; i++)
               {
                 digitalWrite(inner[i], LOW);
                 digitalWrite(outer[i], LOW);
@@ -250,21 +246,21 @@ void loop()
            if (allOff(inner) && allOff(outer))
            {
               digitalWrite(c, LOW);
-              for (int i = 0; i < numLights; i++) 
+              for (int i = 0; i < numLights; i++)
               {
                 digitalWrite(inner[i], LOW);
                 digitalWrite(outer[i], LOW);
               }
               iRingEffect = 0;
               oRingEffect = 0;
-              aRingEffect = 0; 
+              aRingEffect = 0;
               inOut = 0;
               delay(500);
           }
           else
           {
               digitalWrite(c, LOW);
-              for (int i = 0; i < numLights; i++) 
+              for (int i = 0; i < numLights; i++)
               {
                 digitalWrite(inner[i], HIGH);
                 digitalWrite(outer[i], HIGH);
@@ -280,7 +276,7 @@ void loop()
 
 //void write(int[] a, int interDel, int afterDel, value)
 //{
-    
+
 
 
 //}
