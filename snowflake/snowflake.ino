@@ -12,7 +12,7 @@ void setup() {
   pinMode(c, OUTPUT);
   for (int i = 0; i < numLights; i++)
     pinMode(inner[i], OUTPUT);
-   for (int i = 0; i < numLights; i++)
+  for (int i = 0; i < numLights; i++)
     pinMode(outer[i], OUTPUT);
   Serial.println("Snowflake v2.04 Initalize...");
   iringeffect = 0;
@@ -31,17 +31,13 @@ void inouteffect()
      digitalWrite(outer[i], HIGH);
   digitalWrite(c, LOW);
   delay(350);
-  
  
   for (int i = 0; i < numLights; i++)
      digitalWrite(inner[i], HIGH);
   for (int i = 0; i < numLights; i++)
      digitalWrite(outer[i], LOW);
   delay(350);
-  
-
-  
-}
+} //End inouteffect
 
 void oeffect(){
   for (int i = 0; i < numLights; i++) {
@@ -50,7 +46,7 @@ void oeffect(){
     digitalWrite(inner[(i + numLights-1) % numLights], LOW);
     delay(50);
   }
-}
+} //End oeffect
 
 void ieffect(){
   for (int i = 0; i < numLights; i++) {
@@ -59,7 +55,7 @@ void ieffect(){
     digitalWrite(outer[(i + numLights-1) % numLights], LOW);
     delay(50);
   }
-}
+} //End ieffect
 
 void loop() {
   if (iringeffect == 1){
@@ -74,50 +70,46 @@ void loop() {
       inouteffect();    
   }
 
-  while (Serial.available()) {
-    readString += Serial.read(); 
-  }
+  readString = Serial.read();
 
   if (readString.length() > 0) {
-    Serial.println(readString);
 
     if (readString == "ring on") {
-      for (int i = 0; i < numLights; i++) {
+      for (int i = 0; i < numLights; i++) 
         digitalWrite(outer[i], HIGH);
     }
     if (readString == "ring off") {
-      for (int i = 0; i < numLights; i++) {
+      for (int i = 0; i < numLights; i++) 
         digitalWrite(outer[i], LOW);
       iringeffect = 0;
     }
-        if (readString == "center on") {
+    if (readString == "center on") {
           digitalWrite(c, HIGH);
-      }
-        if (readString == "center off") {
+    }
+    if (readString == "center off") {
           digitalWrite(c, LOW);
-        }
-        if (readString == "ring inner on") {
+    }
+    if (readString == "ring inner on") {
           iringeffect = 1;
-        }
-        if (readString == "ring inner off") {
+    }
+    if (readString == "ring inner off") {
           iringeffect = 0;
-          for (int i = 0; i < numLights; i++) {
+          for (int i = 0; i < numLights; i++) 
             digitalWrite(inner[i], LOW);
-          }
-        }
-        if (readString == "ring outer on") {
+    }
+    if (readString == "ring outer on") {
           oringeffect = 1;
-        }
-        if (readString == "ring outer off") {
+    }
+    if (readString == "ring outer off") {
           oringeffect = 0;
           for (int i = 0; i < numLights; i++) {
             digitalWrite(outer[i], LOW);
           }
-        }
-        if (readString == "inout on") {
+    }
+    if (readString == "inout on") {
           inout = 1;
-        }
-        if (readString == "inout off") {
+    }
+    if (readString == "inout off") {
           inout = 0;
           digitalWrite(2, LOW);
           digitalWrite(3, LOW);
@@ -130,8 +122,8 @@ void loop() {
           digitalWrite(10, LOW);
           digitalWrite(11, LOW);
           digitalWrite(12, LOW);
-        }
-        if (readString == "all off") {    
+     }
+     if (readString == "all off") {    
           digitalWrite(2, LOW);
           digitalWrite(3, LOW);
           digitalWrite(4, LOW);
@@ -146,8 +138,8 @@ void loop() {
           iringeffect = 0;
           oringeffect = 0;
           inout = 0;
-        }
-        if (readString == "all on") {
+     }
+     if (readString == "all on") {
           digitalWrite(2, HIGH);
           digitalWrite(3, HIGH);
           digitalWrite(4, HIGH);
@@ -159,8 +151,8 @@ void loop() {
           digitalWrite(10, HIGH);
           digitalWrite(11, HIGH);
           digitalWrite(12, HIGH);
-        }
-    }
-    
-    readString="";
+          Serial.println("All ON");
+     }
+     readString="";
   } 
+}
