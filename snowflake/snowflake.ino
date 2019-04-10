@@ -69,8 +69,11 @@ void loop() {
     if (inout == 1){
       inouteffect();    
   }
-
-  readString = Serial.read();
+  
+  if(Serial.available() > 0) {
+    readString = Serial.read();
+    Serial.println("Received: " + readString);
+  }
 
   if (readString.length() > 0) {
 
@@ -110,48 +113,20 @@ void loop() {
           inout = 1;
     }
     if (readString == "inout off") {
-          inout = 0;
-          digitalWrite(2, LOW);
-          digitalWrite(3, LOW);
-          digitalWrite(4, LOW);
-          digitalWrite(5, LOW);
-          digitalWrite(6, LOW);
-          digitalWrite(7, LOW);
-          digitalWrite(8, LOW);
-          digitalWrite(9, LOW);
-          digitalWrite(10, LOW);
-          digitalWrite(11, LOW);
-          digitalWrite(12, LOW);
+      inout = 0;
+      for(int i = 2; i < 12; i++)
+        digitalWrite(i, LOW);
      }
      if (readString == "all off") {    
-          digitalWrite(2, LOW);
-          digitalWrite(3, LOW);
-          digitalWrite(4, LOW);
-          digitalWrite(5, LOW);
-          digitalWrite(6, LOW);
-          digitalWrite(7, LOW);
-          digitalWrite(8, LOW);
-          digitalWrite(9, LOW);
-          digitalWrite(10, LOW);
-          digitalWrite(11, LOW);
-          digitalWrite(12, LOW);
-          iringeffect = 0;
-          oringeffect = 0;
-          inout = 0;
+      for(int i = 2; i < 12; i++)
+        digitalWrite(i, LOW);
+      iringeffect = 0;
+      oringeffect = 0;
+      inout = 0;
      }
      if (readString == "all on") {
-          digitalWrite(2, HIGH);
-          digitalWrite(3, HIGH);
-          digitalWrite(4, HIGH);
-          digitalWrite(5, HIGH);
-          digitalWrite(6, HIGH);
-          digitalWrite(7, HIGH);
-          digitalWrite(8, HIGH);
-          digitalWrite(9, HIGH);
-          digitalWrite(10, HIGH);
-          digitalWrite(11, HIGH);
-          digitalWrite(12, HIGH);
-          Serial.println("All ON");
+      for(int i = 2; i < 12; i++)
+        digitalWrite(i, HIGH);
      }
      readString="";
   } 
