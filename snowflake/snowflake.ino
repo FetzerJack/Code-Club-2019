@@ -3,10 +3,11 @@ int oringeffect;
 int inout;
 int numLights = 5;
 int c = 7;
-int inner[5] = {2, 3, 4, 5, 6};
-int outer[5] = {8, 9, 10, 11, 12};
-String x;
+int inner[5] = {8, 9, 10, 11, 12};
+int outer[5] = {2, 3, 4, 5, 6};
+char x;
 String readString;
+
 
 void setup() {
   Serial.begin(9600);
@@ -59,15 +60,6 @@ void ieffect(){
 } //End ieffect
 
 void loop() {
-    char x = Serial.read();  //gets one byte from serial buffer
-    if (x == ',') {
-      Serial.println("testsdfasdfdsf");
-      readString=""; //clears variable for new input      
-     }  
-
-
-
-  
   if (iringeffect == 1){
       ieffect();
   }
@@ -80,68 +72,95 @@ void loop() {
       inouteffect();    
   }
   
-if (Serial.available()>0) // Checks for a character in the serial monitor
-{
-    char x = Serial.read();  //gets one byte from serial buffer
-    if (x = "ring on") {
+  while (Serial.available())
+  {
+    delay(3);  
+    char x = Serial.read();
+    readString += x;
+    Serial.println(readString);
+  }
+  if (readString.length() > 0)
+  {
+  Serial.println("*" + readString + "*");
+  readString.trim();
+  Serial.println("*" + readString + "*");
+  }
+  if (readString.length() >0) {
+    if (readString == "static outer on") {
+      for (int i = 0; i < numLights; i++) 
+        digitalWrite(inner[i], HIGH);
+      Serial.println(readString);
+    }
+    else if (readString == "static outer off") {
+      for (int i = 0; i < numLights; i++) 
+        digitalWrite(inner[i], LOW);
+      iringeffect = 0;
+      Serial.println(readString);
+    }
+    if (readString == "static inner on") {
       for (int i = 0; i < numLights; i++) 
         digitalWrite(outer[i], HIGH);
-      x = "";
-      Serial.println(x);
+      Serial.println(readString);
     }
-    if (x == "ring off") {
+    else if (readString == "static inner off") {
       for (int i = 0; i < numLights; i++) 
         digitalWrite(outer[i], LOW);
       iringeffect = 0;
-      Serial.println(x);
-      x = "";
+      Serial.println(readString);
     }
-    if (x == "center on") {
+    else if (readString == "static center on") {
       digitalWrite(c, HIGH);
-      Serial.println();
+      Serial.println(readString);
     }
-    if (x == "center off") {
+    else if (readString == "static center off") {
       digitalWrite(c, LOW);
+      Serial.println(readString);
     }
-    if (x == "ring inner on") {
+    else if (readString == "effect inner on") {
       iringeffect = 1;
+      Serial.println(readString);
     }
-    if (x == "ring inner off") {
+    else if (readString == "effect inner off") {
       iringeffect = 0;
       for (int i = 0; i < numLights; i++) 
             digitalWrite(inner[i], LOW);
+      Serial.println(readString);
     }
-    if (x == "ring outer on") {
+    else if (readString == "effect outer on") {
       oringeffect = 1;
+      Serial.println(readString);
     }
-    if (x == "ring outer off") {
+    else if (readString == "effect outer off") {
       oringeffect = 0;
       for (int i = 0; i < numLights; i++) {
         digitalWrite(outer[i], LOW);
+      Serial.println(readString);
       }
     }
-    if (x == "inout on") {
+    else if (readString == "inout on") {
       inout = 1;
+      Serial.println(readString);
     }
-    if (x == "inout off") {
+    else if (readString == "inout off") {
       inout = 0;
-      for(int i = 2; i < 12; i++)
+      for(int i = 2; i < 13; i++)
         digitalWrite(i, LOW);
+      Serial.println(readString);
       }
-     if (x == "all off") {    
-      for(int i = 2; i < 12; i++)
+     else if (readString == "all off") {    
+      for(int i = 2; i < 13; i++)
         digitalWrite(i, LOW);
       iringeffect = 0;
       oringeffect = 0;
       inout = 0;
+      Serial.println(readString);
      }
-     if (x == "all on") {
-      for(int i = 2; i < 12; i++)
+     else if (readString == "all on") {
+      for(int i = 2; i < 13; i++)
         digitalWrite(i, HIGH);
+      Serial.println(readString);
      }
-         else {     
-      readString += x; //makes the string readString
-    }
-  } 
+    readString = "";
   }
+  } 
   
