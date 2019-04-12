@@ -1,11 +1,12 @@
 int iringeffect;
 int oringeffect;
 int inout;
-String readString;
 int numLights = 5;
 int c = 7;
 int inner[5] = {2, 3, 4, 5, 6};
 int outer[5] = {8, 9, 10, 11, 12};
+String x;
+String readString;
 
 void setup() {
   Serial.begin(9600);
@@ -58,6 +59,15 @@ void ieffect(){
 } //End ieffect
 
 void loop() {
+    char x = Serial.read();  //gets one byte from serial buffer
+    if (x == ',') {
+      Serial.println("testsdfasdfdsf");
+      readString=""; //clears variable for new input      
+     }  
+
+
+
+  
   if (iringeffect == 1){
       ieffect();
   }
@@ -70,64 +80,68 @@ void loop() {
       inouteffect();    
   }
   
-  if(Serial.available() > 0) {
-    readString = Serial.read();
-    Serial.println("Received: " + readString);
-  }
-
-  if (readString.length() > 0) {
-
-    if (readString == "ring on") {
+if (Serial.available()>0) // Checks for a character in the serial monitor
+{
+    char x = Serial.read();  //gets one byte from serial buffer
+    if (x = "ring on") {
       for (int i = 0; i < numLights; i++) 
         digitalWrite(outer[i], HIGH);
+      x = "";
+      Serial.println(x);
     }
-    if (readString == "ring off") {
+    if (x == "ring off") {
       for (int i = 0; i < numLights; i++) 
         digitalWrite(outer[i], LOW);
       iringeffect = 0;
+      Serial.println(x);
+      x = "";
     }
-    if (readString == "center on") {
-          digitalWrite(c, HIGH);
+    if (x == "center on") {
+      digitalWrite(c, HIGH);
+      Serial.println();
     }
-    if (readString == "center off") {
-          digitalWrite(c, LOW);
+    if (x == "center off") {
+      digitalWrite(c, LOW);
     }
-    if (readString == "ring inner on") {
-          iringeffect = 1;
+    if (x == "ring inner on") {
+      iringeffect = 1;
     }
-    if (readString == "ring inner off") {
-          iringeffect = 0;
-          for (int i = 0; i < numLights; i++) 
+    if (x == "ring inner off") {
+      iringeffect = 0;
+      for (int i = 0; i < numLights; i++) 
             digitalWrite(inner[i], LOW);
     }
-    if (readString == "ring outer on") {
-          oringeffect = 1;
+    if (x == "ring outer on") {
+      oringeffect = 1;
     }
-    if (readString == "ring outer off") {
-          oringeffect = 0;
-          for (int i = 0; i < numLights; i++) {
-            digitalWrite(outer[i], LOW);
-          }
+    if (x == "ring outer off") {
+      oringeffect = 0;
+      for (int i = 0; i < numLights; i++) {
+        digitalWrite(outer[i], LOW);
+      }
     }
-    if (readString == "inout on") {
-          inout = 1;
+    if (x == "inout on") {
+      inout = 1;
     }
-    if (readString == "inout off") {
+    if (x == "inout off") {
       inout = 0;
       for(int i = 2; i < 12; i++)
         digitalWrite(i, LOW);
-     }
-     if (readString == "all off") {    
+      }
+     if (x == "all off") {    
       for(int i = 2; i < 12; i++)
         digitalWrite(i, LOW);
       iringeffect = 0;
       oringeffect = 0;
       inout = 0;
      }
-     if (readString == "all on") {
+     if (x == "all on") {
       for(int i = 2; i < 12; i++)
         digitalWrite(i, HIGH);
      }
-     readString="";
+         else {     
+      readString += x; //makes the string readString
+    }
   } 
-}
+  }
+  

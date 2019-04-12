@@ -8,8 +8,8 @@ int inout;
 
 //Current arrangement: center = 7, inner ring = 1,2,3,4,5,6, outer ring = 8,9,10,11,12,0, IR remote = 13
 int c = 7;
-int i1 = 1, i2 = 2, i3 = 3, i4 = 4, i5 = 5, i6 = 6;
-int o1 = 8, o2 = 9, o3 = 10, o4 = 11, o5 = 12, o6 = 0;
+int o1 = 1, o2 = 2, o3 = 3, o4 = 4, o5 = 5, o6 = 6;
+int i1 = 8, i2 = 9, i3 = 10, i4 = 11, i5 = 12, i6 = 0;
 
 IRrecv irrecv(receiver);
 decode_results results;
@@ -353,6 +353,7 @@ void loop() {
         digitalWrite(o5, HIGH);
         digitalWrite(o6, HIGH);
         results.value = 0x000000;
+        delay(500);
     }
     results.value = 0x000000;
     irrecv.resume();
