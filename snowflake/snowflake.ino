@@ -77,13 +77,6 @@ void loop() {
     delay(3);  
     char x = Serial.read();
     readString += x;
-    Serial.println(readString);
-  }
-  if (readString.length() > 0)
-  {
-  Serial.println("*" + readString + "*");
-  readString.trim();
-  Serial.println("*" + readString + "*");
   }
   if (readString.length() >0) {
     if (readString == "static outer on") {
